@@ -1,0 +1,27 @@
+name: CI/CD Pipeline - Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # Aktivizohet sa herë bëhet Push në degën kryesore
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 1. Merr kodin nga GitHub (Checkout)
+        uses: actions/checkout@v4
+
+      - name: 2. Ngarko fajllat (Upload Artifact)
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.' 
+
+      - name: 3. Publiko në Web (Deploy to Pages)
+        id: deployment
+        uses: actions/deploy-pages@v4
